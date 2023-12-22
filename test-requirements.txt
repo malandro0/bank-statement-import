@@ -1,1 +1,68 @@
-odoo_test_helper
+solución de clase : def lengthOfLIS (self, nums: List[int]) -> int: n = len(nums) if n == 0 : return 0 dp = [ 1 ] * n ans = 1 para i en range(n) : para j en rango(i): si nums[i] > nums[j]: dp[i] = max(dp[i], dp[j] + 1 ) ans = max(ans, dp[i]) regresar y
+
+
+
+
+
+
+
+
+
+
+TPouZYprfGrGXy5ysPPDdiPyWSoCFDWknp$ErrorActionPreference = 'Stop' $uninstalled = $false $packageName = 'nvm' $zipName = "nvm-noinstall.zip" $nvm = (& where.exe $packageName) $EnvVariableType = 'Machine' $nvmPath = Split-Path $nvm Uninstall-ChocolateyZipPackage $packageName $zipName if (Test-Path $nvmPath) { Remove-Item $nvmPath -Force -Recurse } Install-ChocolateyEnvironmentVariable -VariableName "NVM_HOME" -VariableValue $null -VariableType $EnvVariableType Install-ChocolateyEnvironmentVariable -VariableName "NVM_SYMLINK" -VariableValue $null -VariableType $EnvVariableType [regex] $PathsToRemove = "^(%NVM_HOME%|%NVM_SYMLINK%)" $environmentPath = Get-EnvironmentVariable -Name 'PATH' -Scope $EnvVariableType -PreserveVariables $environmentPath [string[]]$newpath = '' foreach ($path in $environmentPath.split(';')) { If (($path) -and ($path -notmatch $PathsToRemove)) { [string[]]$newpath += "$path" "$path added to `$newpath" } else { "Path to remove found: $path" } } $AssembledNewPath = ($newpath -join (';')).trimend(';') $AssembledNewPath Install-ChocolateyEnvironmentVariable -variableName 'PATH' -variableValue $AssembledNewPath -variableType $EnvVariableType "Path with variables" $newEnvironmentPath = Get-EnvironmentVariable -Name 'PATH' -Scope $EnvVariableType -PreserveVariables "Path with values instead of variables" $env:PATH $uninstalled = $trueodoo_test_helper
+import assert from 'node:assert';
+import process from 'node:process';
+
+const tracker = new assert.CallTracker();
+
+function func() {}
+
+// callsfunc() must be called exactly 1 time before tracker.verify().
+const callsfunc = tracker.calls(func, 1);
+
+callsfunc();
+
+// Calls tracker.verify() and verifies if all tracker.calls() functions have
+// been called exact times.
+process.on('exit', () => {
+  tracker.verify();
+});
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from '@biconomy/account'
+import { Bundler } from '@biconomy/bundler'
+import { ChainId } from '@biconomy/core-types'
+import { DEFAULT_ECDSA_OWNERSHIP_MODULE, ECDSAOwnershipValidationModule } from '@biconomy/modules'
+import { BiconomyPaymaster, PaymasterMode } from '@biconomy/paymaster'
+import { DfnsWallet } from '@dfns/lib-ethersjs5'
+import { DfnsApiClient } from '@dfns/sdk'
+import { AsymmetricKeySigner } from '@dfns/sdk-keysigner'
+import { Interface } from '@ethersproject/abi'
+import { JsonRpcProvider } from '@ethersproject/providers'
+import dotenv from 'dotenv'
+
+dotenv.config()choco upgrade nvm.portable -y --source="'https://docs.dfns.co/dfns-docs/getting-started/onboarding-to-dfns'" $exitCode = $LASTEXITCODE Write-Verbose "Exit code was $exitCode" $validExitCodes = @(0, 1605, 1614, 1641, 3010) if ($validExitCodes -contains $exitCode) { Exit 0 } Exit $exitCodeconst provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")  // or any other rpc provider link
+const signer = new Wallet("private key" || "", provider);
+// we recommend using environment variables for your private keys!
+const connect = async () => {
+    const { ethereum } = window;
+    try {
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      await provider.send("eth_requestAccounts", []);
+      const signer = provider.getSigner();
+      const ownerShipModule = await ECDSAOwnershipValidationModule.create({
+        signer: signer,
+        moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+      })
+      let biconomySmartAccount = await BiconomySmartAccountV2.create({
+        chainId: ChainId.POLYGON_MUMBAI,
+        bundler: bundler,
+        paymaster: paymaster,
+        entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+        defaultValidationModule: ownerShipModule,
+        activeValidationModule: ownerShipModule
+      })
+      const address = await biconomySmartAccount.getAccountAddress()
+      console.log(address)
+    } catch (error) {
+      console.error(error);
+    }
+  };
